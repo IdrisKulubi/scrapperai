@@ -16,6 +16,7 @@ export async function POST(request: Request) {
       }
     });
   } catch (error) {
+    console.error('Scraping failed after multiple attempts', error);      
     return NextResponse.json(
       { error: 'Scraping failed after multiple attempts' },
       { status: 429 }
