@@ -1,5 +1,4 @@
 import { pgTable, serial, text, timestamp, boolean, integer, jsonb, pgEnum } from 'drizzle-orm/pg-core';
-import { vector } from 'drizzle-orm/pg-core';
 
 export const sectorEnum = pgEnum('sector', ['energy', 'agriculture', 'water', 'other']);
 
@@ -14,7 +13,6 @@ export const scrapedData = pgTable('scraped_data', {
   sector: sectorEnum('sector').notNull(),
   relevanceScore: integer('relevance_score').notNull(),
   deadline: timestamp('deadline'),
-  embeddings: vector('embeddings', { dimensions: 1536 }),
   createdAt: timestamp('created_at').defaultNow(),
 });
 

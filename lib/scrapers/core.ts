@@ -7,7 +7,17 @@ type ScrapeOptions = {
   rateLimitMs?: number;
 };
 
-export const runScraper = async (
+export function runScraper(source: string) {
+  const scraperFn = source.startsWith('http') ? cheerioScraper : playwrightScraper;
+  
+  return async (url: string) => {
+    const scrape = rateLimit(scraperFn(source), 1000);
+    return await scrape(url);
+  };
+}
+
+
+export const runScraperOld = async (
   source: string,
   options: ScrapeOptions = {}
 ) => {
