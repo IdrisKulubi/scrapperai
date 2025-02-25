@@ -15,12 +15,26 @@ export const afdbScraper = {
   parser: ($: CheerioAPI): ScrapedResult[] => {
     const results: ScrapedResult[] = [];
     
-    $(this.selectors.v1.container).each((i, el) => {
+    if (!afdbScraper.selectors.v1) {
+      console.warn("Selectors v1 is undefined, skipping parsing.");
+      return results;
+    }
+    
+    const v1Selectors = afdbScraper.selectors.v1;
+    
+    $(v1Selectors.container).each((i, el) => {
       results.push({
-        title: $(el).find(this.selectors.v1.title).text().trim(),
-        content: $(el).find(this.selectors.v1.content).text().trim(),
-        date: $(el).find(this.selectors.v1.date).text().trim(),
+        title: $(el).find(v1Selectors.title).text().trim(),
+        content: $(el).find(v1Selectors.content).text().trim(),
+        date: $(el).find(v1Selectors.date).text().trim(),
         url: $(el).find('a').attr('href') || '',
+        source: afdbScraper.name || '',
+        timestamp: new Date(),
+        classification: {
+          relevant: true,
+          sector: 'infrastructure',
+          relevance_score: 0.8,
+        },
       });
     });
 

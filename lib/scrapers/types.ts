@@ -11,6 +11,8 @@ export type ScrapedResult = {
   metadata?: Record<string, unknown>;
   timestamp: Date;
   source: string;
+  title: string;
+  date: string;
   
   
 }; 
